@@ -7,8 +7,10 @@ steps:
     image: rastasi/tic80pro:latest
     environment:
       GAME_NAME: bombexpert
+      GAME_LANG: lua
+      XDG_RUNTIME_DIR: /tmp
     commands:
-      - tic80 -build $GAME_NAME.$GAME_LANG $GAME_NAME.tic
+      - tic80 --cli --skip --fs=. --cmd="load $GAME_NAME.$GAME_LANG & export $GAME_NAME.tic & exit"
 
   - name: artifact
     image: alpine
