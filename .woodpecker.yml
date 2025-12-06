@@ -1,5 +1,12 @@
+vars:
+  UPDATE_SECRET:
+    from_secret: update_secret_key
 steps:
-  - name: copyfile
+  - name: copy_file
     image: alpine
     commands:
       - cp ./bombexpert.lua /games
+  - name: update_catalog
+    image: alpine
+    commands:
+      - curl https://games.vps.teletype.hu/update?secret=$UPDATE_SECRET
