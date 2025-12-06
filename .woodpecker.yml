@@ -3,11 +3,10 @@ environment:
 
 steps:
   - name: build_tic
-    image: alpine
+    image: tic80/tic80:latest
+    environment:
+      GAME_NAME: bombexpert
     commands:
-      - apk add --no-cache bash curl wget xz
-      - wget -q https://tic80.com/bin/linux/tic80
-      - chmod +x tic80
       - ./tic80 -build $GAME_NAME.lua $GAME_NAME.tic
 
   - name: copy_files
