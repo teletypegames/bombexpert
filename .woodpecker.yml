@@ -5,8 +5,9 @@ steps:
       DROPAREA_SSH_PASSWORD:
         from_secret: droparea_ssh_password
     commands:
-      - apk add --no-cache openssh-client
-      - scp -P 2223 bombexpert.lua games:$DROPAREA_SSH_PASSWORD@droparea:/home/games/drop/
+      - apk add --no-cache openssh-client sshpass
+      - mkdir -p /root/.ssh
+      - sshpass -p "$SSH_PASSWORD" scp -P 2223 bombexpert.lua games@droparea:/home/games/drop/
   - name: update_catalog
     image: alpine
     environment:
