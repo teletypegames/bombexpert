@@ -1,15 +1,13 @@
 steps:
   - name: copy_file
     image: appleboy/drone-scp
-    environment:
-      DROPAREA_SSH_PASSWORD:
-        from_secret: ssh_key
     settings:
       host: droparea
-      username: tasi
-      key: $DROPAREA_SSH_PASSWORD
+      username: games
+      password:
+        from_secret: droparea_ssh_password
       port: 2222
-      target: /home/tasi/drop/
+      target: /home/games
       source: bombexpert.lua
   - name: update_catalog
     image: alpine
