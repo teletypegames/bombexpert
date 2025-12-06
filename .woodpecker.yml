@@ -1,6 +1,3 @@
-variables:
-  UPDATE_SECRET:
-    from_secret: update_secret_key
 steps:
   - name: copy_file
     image: alpine
@@ -8,6 +5,9 @@ steps:
       - cp ./bombexpert.lua /games
   - name: update_catalog
     image: alpine
+    environment:
+      UPDATE_SECRET:
+        from_secret: update_secret_key
     commands:
       - apk add --no-cache curl
       - curl https://games.vps.teletype.hu/update?secret=${UPDATE_SECRET}
