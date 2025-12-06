@@ -7,7 +7,7 @@ steps:
     commands:
       - apk add --no-cache openssh-client sshpass
       - mkdir -p /root/.ssh
-      - sshpass -o StrictHostKeyChecking=no -p $DROPAREA_SSH_PASSWORD scp -P 2223 bombexpert.lua games@vps.teletype.hu:/home/games/drop/
+      - sshpass -p $DROPAREA_SSH_PASSWORD scp -o StrictHostKeyChecking=no -P 2223 bombexpert.lua games@vps.teletype.hu:/home/games/drop/
   - name: update_catalog
     image: alpine
     environment:
