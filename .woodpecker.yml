@@ -7,7 +7,7 @@ steps:
     environment:
       GAME_NAME: bombexpert
     commands:
-      - ./tic80 -build $GAME_NAME.lua $GAME_NAME.tic
+      - tic80 -build $GAME_NAME.lua $GAME_NAME.tic
 
   - name: copy_files
     image: alpine
