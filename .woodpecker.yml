@@ -2,11 +2,11 @@ steps:
   - name: copy_file
     image: appleboy/drone-scp
     settings:
-      host: droparea
+      host: vps.teletype.hu
       username: games
       password:
         from_secret: droparea_ssh_password
-      port: 2222
+      port: 2223
       target: /home/games
       source: bombexpert.lua
   - name: update_catalog
