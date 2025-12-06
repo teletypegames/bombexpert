@@ -3,7 +3,7 @@ environment:
 
 steps:
   - name: build_tic
-    image: nesbox/baremetalpi-tic80:latest
+    image: nesbox/devkitpro-tic80:latest
     environment:
       GAME_NAME: bombexpert
     commands:
