@@ -11,8 +11,6 @@ steps:
       port: 2222
       target: /home/tasi/drop/
       source: bombexpert.lua
-    when:
-      - push
   - name: update_catalog
     image: alpine
     environment:
