@@ -2,7 +2,7 @@ steps:
   - name: copy_file
     image: alpine
     volumes:
-      - /games:/games
+      - /games:/games:rw
     commands:
       - cp ./bombexpert.lua /games
   - name: update_catalog
