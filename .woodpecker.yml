@@ -1,4 +1,4 @@
-environment:
+environment: &environment
   GAME_NAME: bombexpert
   GAME_LANG: lua
 
@@ -6,8 +6,7 @@ steps:
   - name: build
     image: rastasi/tic80pro:latest
     environment:
-      GAME_NAME: bombexpert
-      GAME_LANG: lua
+      <<: *environment
       XDG_RUNTIME_DIR: /tmp
     commands:
       - tic80 --cli --skip --fs=. --cmd="load $GAME_NAME.$GAME_LANG & save $GAME_NAME & exit"
@@ -15,6 +14,7 @@ steps:
   - name: artifact
     image: alpine
     environment:
+      <<: *environment
       DROPAREA_HOST: vps.teletype.hu
       DROPAREA_PORT: 2223
       DROPAREA_TARGET_PATH: /home/drop
