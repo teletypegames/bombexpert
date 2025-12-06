@@ -1,5 +1,6 @@
 pipeline:
-  copyfile:
-    image: alpine
-    commands:
-      - cp ./bombexpert.lua /games
+  steps:
+    - name: copyfile:
+      image: alpine
+      commands:
+        - cp ./bombexpert.lua /games
