@@ -10,4 +10,4 @@ steps:
     image: alpine
     commands:
       - apk add --no-cache curl
-      - curl https://games.vps.teletype.hu/update?secret=$UPDATE_SECRET
+      - curl https://games.vps.teletype.hu/update?secret=${UPDATE_SECRET}
