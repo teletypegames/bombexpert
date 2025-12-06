@@ -1,14 +1,12 @@
 steps:
   - name: copy_file
-    image: appleboy/drone-scp
-    settings:
-      host: vps.teletype.hu
-      username: drop
-      password:
+    image: alpine
+    environment:
+      DROPAREA_SSH_PASSWORD:
         from_secret: droparea_ssh_password
-      port: 2223
-      source: ./bombexpert.lua
-      target: /home/drop
+    commands:
+      - apk add --no-cache openssh-client
+      - scp -P 2223 bombexpert.lua games:$DROPAREA_SSH_PASSWORD@droparea:/home/games/drop/
   - name: update_catalog
     image: alpine
     environment:
