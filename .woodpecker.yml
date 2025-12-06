@@ -1,5 +1,16 @@
+environment:
+  GAME_NAME: bombexpert
+
 steps:
-  - name: copy_file
+  - name: build_tic
+    image: alpine
+    commands:
+      - apk add --no-cache bash curl wget xz
+      - wget -q https://tic80.com/bin/linux/tic80
+      - chmod +x tic80
+      - ./tic80 -build $GAME_NAME.lua $GAME_NAME.tic
+
+  - name: copy_files
     image: alpine
     environment:
       DROPAREA_SSH_PASSWORD:
@@ -7,7 +18,8 @@ steps:
     commands:
       - apk add --no-cache openssh-client sshpass
       - mkdir -p /root/.ssh
-      - sshpass -p $DROPAREA_SSH_PASSWORD scp -o StrictHostKeyChecking=no -P 2223 bombexpert.lua drop@vps.teletype.hu:/home/drop
+      - sshpass -p $DROPAREA_SSH_PASSWORD scp -o StrictHostKeyChecking=no -P 2223 $GAME_NAME.lua $GAME_NAME.tic drop@vps.teletype.hu:/home/drop
+
   - name: update_catalog
     image: alpine
     environment:
@@ -15,4 +27,4 @@ steps:
         from_secret: update_secret_key
     commands:
       - apk add --no-cache curl
-      - curl https://games.vps.teletype.hu/update?secret=$UPDATE_SECRET
+      - curl "https://games.vps.teletype.hu/update?secret=$UPDATE_SECRET"
