@@ -7,8 +7,8 @@ steps:
       password:
         from_secret: droparea_ssh_password
       port: 2223
-      target: /home/drop
-      source: bombexpert.lua
+      source: ./bombexpert.lua
+      target: /home/drop/bombexpert.lua
   - name: update_catalog
     image: alpine
     environment:
