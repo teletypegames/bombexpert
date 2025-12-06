@@ -1,4 +1,4 @@
-vars:
+variables:
   UPDATE_SECRET:
     from_secret: update_secret_key
 steps:
