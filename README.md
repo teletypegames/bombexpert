@@ -1,4 +1,3 @@
-
 # BombExpert
 
 A classic Bomberman clone for [TIC-80](https://tic80.com/) fantasy console.
