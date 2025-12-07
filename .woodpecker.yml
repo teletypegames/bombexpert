@@ -29,6 +29,7 @@ steps:
   - name: update
     image: alpine
     environment:
+      <<: *environment
       UPDATE_SERVER: https://games.vps.teletype.hu
       UPDATE_SECRET:
         from_secret: update_secret_key
