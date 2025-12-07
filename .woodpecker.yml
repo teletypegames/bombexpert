@@ -9,7 +9,7 @@ steps:
       <<: *environment
       XDG_RUNTIME_DIR: /tmp
     commands:
-      - tic80 --cli --skip --fs=. --cmd="load $GAME_NAME.$GAME_LANG & save $GAME_NAME & export html $GAME_NAME_html & exit"
+      - tic80 --cli --skip --fs=. --cmd="load $GAME_NAME.$GAME_LANG & save $GAME_NAME & export html bombexpert_html & exit"
 
   - name: artifact
     image: alpine
