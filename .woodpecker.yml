@@ -9,7 +9,7 @@ steps:
       <<: *environment
       XDG_RUNTIME_DIR: /tmp
     commands:
-      - tic80 --cli --skip --fs=. --cmd="load $GAME_NAME.$GAME_LANG & save $GAME_NAME & exit"
+      - tic80 --cli --skip --fs=. --cmd="load $GAME_NAME.$GAME_LANG & save $GAME_NAME & export html $GAME_NAME_html & exit"
 
   - name: artifact
     image: alpine
@@ -24,7 +24,7 @@ steps:
     commands:
       - apk add --no-cache openssh-client sshpass
       - mkdir -p /root/.ssh
-      - sshpass -p $DROPAREA_SSH_PASSWORD scp -o StrictHostKeyChecking=no -P $DROPAREA_PORT $GAME_NAME.$GAME_LANG $GAME_NAME.tic $DROPAREA_USER@$DROPAREA_HOST:$DROPAREA_TARGET_PATH
+      - sshpass -p $DROPAREA_SSH_PASSWORD scp -o StrictHostKeyChecking=no -P $DROPAREA_PORT $GAME_NAME.$GAME_LANG $GAME_NAME.tic $GAME_NAME_html.zip $DROPAREA_USER@$DROPAREA_HOST:$DROPAREA_TARGET_PATH
 
   - name: update
     image: alpine
