@@ -65,15 +65,6 @@ Then open http://localhost:3333 in your browser.
 - [TIC-80](https://tic80.com/) fantasy console (free version works)
 - Or any modern web browser (for HTML export)
 
-## Project Structure
-
-```
-bomberman/
-├── bombexpert.lua    # Main game source code
-├── serve.py         # Simple HTTP server for browser testing
-└── README.md        # This file
-```
-
 ## Credits
 
 - **Author**: Zsolt Tasnadi
