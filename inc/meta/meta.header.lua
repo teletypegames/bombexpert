@@ -1,4 +1,5 @@
 -- title:   BombExpert
+-- name: bombexpert
 -- author:  Zsolt Tasnadi
 -- desc:    Simple BombExpert for TIC-80
 -- site:    http://teletype.hu
