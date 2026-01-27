@@ -1,0 +1,10 @@
+-- title:   BombExpert
+-- author:  Zsolt Tasnadi
+-- desc:    Simple BombExpert for TIC-80
+-- site:    http://teletype.hu
+-- license: MIT License
+-- version: 0.2
+-- script:  lua
+
+-- luacheck: globals TIC btn btnp cls rect spr print exit sfx keyp key
+-- luacheck: max line length 150
