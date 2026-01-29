@@ -12,7 +12,7 @@ OUTPUT_TIC = $(PROJECT).tic
 SRC_DIR    = inc
 SRC        = $(shell sed 's|^|$(SRC_DIR)/|' $(ORDER))
 
-ASSETS_LUA = inc/bombexpert.lua
+ASSETS_LUA = inc/meta/meta.assets.lua
 
 # CI/CD variables
 VERSION_FILE = .version
@@ -82,8 +82,11 @@ clean:
 
 # CI/CD Targets
 ci-version:
-	@echo "==> Extracting version"
 	@VERSION=$$(sed -n "s/^-- version: //p" inc/meta/meta.header.lua | head -n 1 | tr -d "[:space:]"); \
+	BRANCH=$${CI_COMMIT_BRANCH:-$${WOODPECKER_BRANCH}}; \
+	if [ "$$BRANCH" != "main" ] && [ "$$BRANCH" != "master" ] && [ -n "$$BRANCH" ]; then \
+		VERSION=dev-$$VERSION-$$BRANCH; \
+	fi; \
 	echo "VERSION is: $$VERSION"; \
 	echo $$VERSION > $(VERSION_FILE)
 
