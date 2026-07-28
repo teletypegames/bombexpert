@@ -1,5 +1,4 @@
 .local
-.vscode
 .DS_Store
 bombexpert.lua
 bombexpert/*

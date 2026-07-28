@@ -1,0 +1,15 @@
+{
+    "Lua.diagnostics.globals": [
+        "explode",
+        "btn",
+        "btnp",
+        "rect",
+        "cls",
+        "spr",
+        "exit",
+        "sfx",
+        "keyp",
+        "key",
+        "pmem"
+    ]
+}
