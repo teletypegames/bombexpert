@@ -3,6 +3,7 @@
 -- author:  Zsolt Tasnadi
 -- desc:    Simple BombExpert for TIC-80
 -- site:    http://teletype.hu
+-- repo:    https://git.teletypegames.org/games/bombexpert
 -- license: MIT License
 -- version: 0.2
 -- script:  lua
