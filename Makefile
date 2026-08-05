@@ -149,10 +149,10 @@ ci-upload:
 			"$(UPDATE_SERVER)/build/upload?name=$(PROJECT)&version=$$VERSION" || exit 1; \
 	done
 
-ci-update:
+ci-publish:
 	@VERSION=$$(cat $(VERSION_FILE)); \
 	echo "==> Triggering update for version $$VERSION"; \
 	curl -fsS -X POST -H "X-Update-Secret: $(UPDATE_SECRET)" "$(UPDATE_SERVER)/build/publish?name=$(PROJECT)&platform=tic80&version=$$VERSION"
 
-.PHONY: all build export binaries watch import_assets export_assets clean ci-version ci-export ci-binaries ci-upload ci-update
+.PHONY: all build export binaries watch import_assets export_assets clean ci-version ci-export ci-binaries ci-upload ci-publish
 
