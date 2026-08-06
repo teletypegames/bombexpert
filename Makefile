@@ -15,9 +15,6 @@ SRC        = $(shell sed 's|^|$(SRC_DIR)/|' $(ORDER))
 ASSETS_LUA = inc/meta/meta.assets.lua
 
 # CI/CD variables
-VERSION_FILE = .version
-GAME_LANG ?= lua
-UPDATE_SERVER ?= https://teletypegames.org
 
 all: build
 
@@ -112,47 +109,4 @@ clean:
 	@rm -f $(PROJECT)-win.exe $(PROJECT)-linux $(PROJECT)-mac
 	@echo "==> Cleaned build artifacts"
 
-# CI/CD Targets
-ci-version:
-	@VERSION=$$(sed -n "s/^-- version: //p" inc/meta/meta.header.lua | head -n 1 | tr -d "[:space:]"); \
-	BRANCH=$${CI_COMMIT_BRANCH:-$${WOODPECKER_BRANCH}}; \
-	if [ "$$BRANCH" != "main" ] && [ "$$BRANCH" != "master" ] && [ -n "$$BRANCH" ]; then \
-		VERSION=dev-$$VERSION-$$BRANCH; \
-	fi; \
-	echo "VERSION is: $$VERSION"; \
-	echo $$VERSION > $(VERSION_FILE)
-
-ci-export:
-	@VERSION=$$(cat $(VERSION_FILE)); \
-	echo "==> Building and exporting version $$VERSION"; \
-	$(MAKE) export VERSION=$$VERSION
-
-ci-binaries:
-	@VERSION=$$(cat $(VERSION_FILE)); \
-	$(MAKE) binaries VERSION=$$VERSION
-
-ci-upload:
-	@VERSION=$$(cat $(VERSION_FILE)); \
-	echo "==> Uploading artifacts for version $$VERSION"; \
-	ls -lh $(PROJECT)-$$VERSION.* $(PROJECT).tic $(PROJECT).html.zip 2>/dev/null || true; \
-	cp $(PROJECT).lua $(PROJECT)-$$VERSION.lua; \
-	FILE_LUA=$(PROJECT)-$$VERSION.lua; \
-	FILE_TIC=$(PROJECT)-$$VERSION.tic; \
-	FILE_HTML_ZIP=$(PROJECT)-$$VERSION.html.zip; \
-	BINS=""; \
-	for slug in $(BINARY_SLUGS); do \
-		[ -f "$(PROJECT)-$$VERSION-$$slug.zip" ] && BINS="$$BINS $(PROJECT)-$$VERSION-$$slug.zip"; \
-	done; \
-	for f in $$FILE_LUA $$FILE_TIC $$FILE_HTML_ZIP $$BINS; do \
-		curl -fsS -H "X-Update-Secret: $(UPDATE_SECRET)" \
-			-F "file=@$$f" \
-			"$(UPDATE_SERVER)/build/upload?name=$(PROJECT)&version=$$VERSION" || exit 1; \
-	done
-
-ci-publish:
-	@VERSION=$$(cat $(VERSION_FILE)); \
-	echo "==> Publishing version $$VERSION"; \
-	curl -fsS -X POST -H "X-Update-Secret: $(UPDATE_SECRET)" "$(UPDATE_SERVER)/build/publish?name=$(PROJECT)&platform=tic80&version=$$VERSION"
-
-.PHONY: all build export binaries watch import_assets export_assets clean ci-version ci-export ci-binaries ci-upload ci-publish
-
+.PHONY: all build export binaries watch import_assets export_assets clean
