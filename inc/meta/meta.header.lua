@@ -4,7 +4,7 @@
 -- desc:    Simple BombExpert for TIC-80
 -- site:    http://teletype.hu
 -- repo:    https://git.teletypegames.org/games/bombexpert
--- license: MIT License
+-- license: MIT
 -- version: 0.2
 -- script:  lua
 
