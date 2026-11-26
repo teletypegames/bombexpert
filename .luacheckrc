@@ -21,6 +21,7 @@ globals = {
   "Player",
   "Powerup",
   "Print",
+  "Rain",
   "RoundEndWindow",
   "Settings",
   "SettingsWindow",

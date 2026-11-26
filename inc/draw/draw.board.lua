@@ -36,14 +36,14 @@ function Board.draw_tiles()
   end
 end
 
---- Draws a flame cell: red edge, orange body, flickering yellow core.
+--- Draws a flame cell: green edge, neon body, flickering pale core.
 --- @within Board
 local function draw_flame(x, y, size, seed)
   local colors = Config.colors
   local inset = math.floor((Config.board.tile_size - size) / 2)
-  rect(x + inset, y + inset, size, size, colors.red)
+  rect(x + inset, y + inset, size, size, colors.grey)
   if size > 2 then
-    rect(x + inset + 1, y + inset + 1, size - 2, size - 2, colors.orange)
+    rect(x + inset + 1, y + inset + 1, size - 2, size - 2, colors.lime)
   end
   if size > 4 then
     local core = (Context.frame + seed) % 6 < 3 and colors.yellow or colors.white
@@ -91,28 +91,35 @@ function Board.draw_bombs()
     local x, y = screen_x(Util.to_pixel(bomb.grid_x)), screen_y(Util.to_pixel(bomb.grid_y))
     local pulse = math.floor(Context.frame / 8) % 2
     local flashing = bomb.timer < Config.ai.danger_threshold and math.floor(bomb.timer / 3) % 2 == 0
-    if flashing then poke4(PALETTE_MAP + Config.colors.shadow, Config.colors.red) end
+    if flashing then poke4(PALETTE_MAP + Config.colors.dark_grey, Config.colors.red) end
     spr(Config.sprites.bomb, x, y + pulse, 0)
-    if flashing then poke4(PALETTE_MAP + Config.colors.shadow, Config.colors.shadow) end
+    if flashing then poke4(PALETTE_MAP + Config.colors.dark_grey, Config.colors.dark_grey) end
     pix(x + 4 + math.random(-1, 1), y - 1 + pulse + math.random(-1, 0), sparks[math.random(#sparks)])
   end
 end
 
---- Draws a player's sprite; player 1's white body is tinted light blue.
+--- Draws a player's sprite: a coat, shades and the pill color (blue or red) on the tie.
+--- With glow, a one-pixel outline in the pill color keeps the dark coat visible on the board.
 --- @within Board
 --- @param index number The player (1 or 2).<br/>
 --- @param x number Left.<br/>
 --- @param y number Top.<br/>
 --- @param[opt] scale number Scale; 1 by default.<br/>
 --- @param[opt] flip number 1 to mirror horizontally.<br/>
-function Board.draw_player_sprite(index, x, y, scale, flip)
-  if index == 1 then
-    poke4(PALETTE_MAP + Config.colors.white, Config.colors.light_blue)
-    spr(Config.sprites.player_blue, x, y, 0, scale or 1, flip or 0)
-    poke4(PALETTE_MAP + Config.colors.white, Config.colors.white)
-  else
-    spr(Config.sprites.player_red, x, y, 0, scale or 1, flip or 0)
+--- @param[opt] glow boolean Draw the outline.<br/>
+function Board.draw_player_sprite(index, x, y, scale, flip, glow)
+  local sprite = index == 1 and Config.sprites.player_blue or Config.sprites.player_red
+  scale, flip = scale or 1, flip or 0
+  if glow then
+    local color = index == 1 and Config.colors.blue or Config.colors.red
+    for c = 1, 15 do poke4(PALETTE_MAP + c, color) end
+    spr(sprite, x - scale, y, 0, scale, flip)
+    spr(sprite, x + scale, y, 0, scale, flip)
+    spr(sprite, x, y - scale, 0, scale, flip)
+    spr(sprite, x, y + scale, 0, scale, flip)
+    for c = 1, 15 do poke4(PALETTE_MAP + c, c) end
   end
+  spr(sprite, x, y, 0, scale, flip)
 end
 
 --- Draws the players; they bob while walking, face their direction and blink while dying.
@@ -123,8 +130,7 @@ function Board.draw_players()
     if visible and not (player.dead and Context.phase_timer < Config.timing.death_duration / 2) then
       local x, y = screen_x(player.pixel_x), screen_y(player.pixel_y)
       local bob = player.moving and math.floor(Context.frame / 4) % 2 or 0
-      rect(x + 2, y + 6, 4, 1, Config.colors.teal)
-      Board.draw_player_sprite(player.index, x, y - bob, 1, player.facing < 0 and 1 or 0)
+      Board.draw_player_sprite(player.index, x, y - bob, 1, player.facing < 0 and 1 or 0, true)
     end
   end
 end
@@ -198,6 +204,8 @@ end
 --- @within Board
 function Board.draw()
   cls(Config.colors.green)
+  Rain.draw(Config.board.offset_x, Config.board.offset_y, Config.board.width, Config.board.height,
+    Config.board.tile_size, { head = Config.colors.grey, mid = Config.colors.teal, tail = Config.colors.shadow })
   Board.draw_shadows()
   Board.draw_tiles()
   Board.draw_explosions()

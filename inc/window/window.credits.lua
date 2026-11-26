@@ -20,8 +20,8 @@ local LINES = {
   },
 }
 local SCROLL = "BOMBEXPERT FOR TIC-80   *   TELETYPEGAMES.ORG   *   THANKS FOR PLAYING   *   "
-local RASTER = { 8, 9, 10, 11, 12, 11, 10, 9, 8 }
-local RAINBOW = { 4, 3, 2, 11, 10, 5 }
+local RASTER = { 7, 14, 13, 5, 11, 5, 13, 14, 7 }
+local RAINBOW = { 5, 11, 12, 13, 14, 13 }
 local TITLE_FALL = 20
 local TITLE_DELAY = 5
 local LINE_DELAY = 25
@@ -59,7 +59,7 @@ local function draw_credits_title()
     local t = math.min(1, math.max(0, (_credits_timer - i * TITLE_DELAY) / TITLE_FALL))
     if t > 0 then
       local y = math.floor(-16 + (1 - (1 - t) * (1 - t)) * 24)
-      Print.text_contour(ch, x, y, Config.colors.yellow, false, scale)
+      Print.text_contour(ch, x, y, Config.colors.lime, false, scale)
     end
     x = x + Print.width(ch, false, scale)
   end

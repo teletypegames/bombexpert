@@ -25,8 +25,8 @@ function PauseWindow.draw()
   local w, h = 110, 62
   local x = (Config.screen.width - w) / 2
   local y = 38
-  UI.draw_panel(x, y, w, h, Config.colors.yellow)
-  Print.text_center("PAUSED", Config.screen.width / 2, y + 7, Config.colors.yellow)
+  UI.draw_panel(x, y, w, h, Config.colors.lime)
+  Print.text_center("PAUSED", Config.screen.width / 2, y + 7, Config.colors.lime)
   UI.draw_menu(PAUSE_ITEMS, Context.pause_item, x + 26, y + 22)
 end
 

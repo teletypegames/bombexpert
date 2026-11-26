@@ -16,7 +16,7 @@ function SettingsWindow.draw()
     local y = START_Y + (i - 1) * ROW_H
     local is_selected = Context.settings_item == i
     if is_selected then
-      rect(0, y - 2, Config.screen.width, ROW_H, colors.blue)
+      rect(0, y - 2, Config.screen.width, ROW_H, colors.teal)
       print("<", VALUE_X - 10, y, colors.cyan)
       print(">", VALUE_X + 40, y, colors.cyan)
     end

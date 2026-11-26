@@ -1,23 +1,13 @@
---- The title screen: a big bomb with a burning fuse between the two players.
+--- The title screen: digital rain, a big bomb with a burning fuse between the two players.
 --- @section TitleWindow
 local TITLE_TEXT = "BOMBEXPERT"
 local GROUND_Y = 100
-local NUM_STARS = 36
 local _title_timer = 0
-local _stars = {}
 
 --- Starts the title screen and the menu music.
 --- @within TitleWindow
 function TitleWindow.enter()
   _title_timer = 0
-  _stars = {}
-  for i = 1, NUM_STARS do
-    _stars[i] = {
-      x = math.random(0, Config.screen.width - 1),
-      y = math.random(0, GROUND_Y - 30),
-      phase = math.random(0, 60),
-    }
-  end
   Audio.music_play("menu")
 end
 
@@ -30,7 +20,7 @@ local function draw_title()
   for i = 1, #TITLE_TEXT do
     local ch = TITLE_TEXT:sub(i, i)
     local y = 10 + math.floor(math.sin(_title_timer * 0.08 + i * 0.6) * 3 + 0.5)
-    local color = i <= 4 and Config.colors.yellow or Config.colors.light_blue
+    local color = i <= 4 and Config.colors.lime or Config.colors.white
     Print.text_contour(ch, x, y, color, false, scale, Config.colors.black)
     x = x + Print.width(ch, false, scale)
   end
@@ -60,11 +50,7 @@ end
 function TitleWindow.draw()
   local colors = Config.colors
   cls(colors.navy)
-  for _, star in ipairs(_stars) do
-    if math.floor((_title_timer + star.phase) / 20) % 3 ~= 0 then
-      pix(star.x, star.y, colors.light_grey)
-    end
-  end
+  Rain.draw(0, 0, Config.screen.width / 8, GROUND_Y / 8, 8, { head = colors.white, mid = colors.lime, tail = colors.grey })
 
   rect(0, GROUND_Y, Config.screen.width, Config.screen.height - GROUND_Y, colors.green)
   for x = 0, Config.screen.width - 1, 8 do
@@ -81,7 +67,7 @@ function TitleWindow.draw()
   if Util.blink(20) then
     Print.text_center("PRESS SPACE", Config.screen.width / 2, 116, colors.white)
   end
-  print("(c) Teletype Games", 3, 129, colors.light_grey, false, 1, true)
+  print("(c) Teletype Games", 3, 129, colors.grey, false, 1, true)
 end
 
 --- Opens the menu on Select.

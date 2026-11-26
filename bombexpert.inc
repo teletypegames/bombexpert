@@ -15,6 +15,7 @@ logic/logic.bomb.lua
 logic/logic.ai.lua
 logic/logic.player.lua
 logic/logic.match.lua
+draw/draw.rain.lua
 draw/draw.board.lua
 window/window.manager.lua
 window/window.register.lua

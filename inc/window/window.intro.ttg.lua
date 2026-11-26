@@ -27,7 +27,7 @@ function TTGIntroWindow.draw()
   for row, line in ipairs(LOGO) do
     for col = 1, math.min(cols, reveal) do
       if line:sub(col, col) == "#" then
-        local color = col >= reveal - 1 and Config.colors.white or Config.colors.light_blue
+        local color = col >= reveal - 1 and Config.colors.white or Config.colors.lime
         rect(x0 + (col - 1) * BLOCK, y0 + (row - 1) * BLOCK, BLOCK - 1, BLOCK - 1, color)
       end
     end

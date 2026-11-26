@@ -7,6 +7,7 @@ A Bomberman-style duel for the [TIC-80](https://tic80.com/) fantasy console: one
 - 1 Player mode (vs CPU) and 2 Player local multiplayer
 - Matches: the first to win 3 rounds (adjustable) is the champion, with a rematch
 - READY / GO countdown, pause menu (resume, restart round, main menu)
+- A Matrix-style look: phosphor-green palette, digital rain, code walls, coat-and-shades players with a blue-pill and a red-pill glow
 - Grid-based movement with smooth animation, destructible walls, screen shake and debris
 - Power-ups hidden under the walls:
   - **B** (yellow): +1 bomb capacity

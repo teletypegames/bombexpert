@@ -12,6 +12,7 @@ function Config.initial_data()
       width = 240,
       height = 136,
     },
+    -- a phosphor-green palette (meta.assets PALETTE); the names keep the hue of each slot
     colors = {
       black = 0,
       shadow = 1,

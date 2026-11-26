@@ -16,3 +16,4 @@ AI = {}
 Player = {}
 Match = {}
 Board = {}
+Rain = {}

@@ -7,7 +7,7 @@ local MENU_ROW_H = 12
 function UI.draw_top_bar(title)
   rect(0, 0, Config.screen.width, 10, Config.colors.shadow)
   rect(0, 10, Config.screen.width, 2, Config.colors.black)
-  Print.text(title, 4, 2, Config.colors.yellow)
+  Print.text(title, 4, 2, Config.colors.lime)
 end
 
 --- Draws the hint line at the bottom of a screen.

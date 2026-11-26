@@ -39,7 +39,7 @@ State machine driven by a window manager. `TIC()` in `inc/system/system.main.lua
 | File | Purpose |
 |------|---------|
 | `init.module.lua` | Global module tables |
-| `init.config.lua` | `Config`: screen, Sweetie 16 colors, board, tiles, sprite ids, player/bomb/ai/map/match/audio values, timing |
+| `init.config.lua` | `Config`: screen, colors of the phosphor-green palette, board, tiles, sprite ids, player/bomb/ai/map/match/audio values, timing |
 | `init.context.lua` | `Context`: runtime state — current window, menu selections, players, bombs, explosions, power-ups, map, score, round, phase |
 
 ### Windows (`inc/window/`)
@@ -74,10 +74,11 @@ State machine driven by a window manager. `TIC()` in `inc/system/system.main.lua
 
 ### Drawing, system, audio
 
-- `draw/draw.board.lua`: the round — walls, flames, power-ups, bombs (palette-map flash), players (player 1 tinted light blue), particles, top bar.
+- `draw/draw.board.lua`: the round — digital rain on the floor, code walls, green flames, power-ups, bombs (palette-map flash), players with a glow in their pill color (blue / red), particles, top bar.
+- `draw/draw.rain.lua`: `Rain.draw`, stateless digital rain (hash of column and frame); also behind the title and the menu.
 - `system/`: `Util`, `Print` (shadow/contour text), `Input` (menu keys, `Input.player(n)` controls), `UI` (top bar, menus, panels).
 - `audio/audio.manager.lua`: sound effects and a step sequencer for the menu/game music and jingles (channels: 0 explosion, 1 effects, 2 melody/jingles, 3 bass). SFX 0–6 live in `inc/meta/meta.assets.lua`.
 
 ### Assets
 
-`inc/meta/meta.assets.lua` holds the TIC-80 sections (TILES, SPRITES, WAVES, SFX, TRACKS, PALETTE). Sprites 256–260: player 1, player 2, bomb, breakable wall, solid wall.
+`inc/meta/meta.assets.lua` holds the TIC-80 sections (TILES, SPRITES, WAVES, SFX, TRACKS, PALETTE). Sprites 256–260: player 1 (blue tie), player 2 (red tie), bomb, breakable code wall, solid wall. The look is Matrix-style: a phosphor-green palette, digital rain, figures in coats and shades.
