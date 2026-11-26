@@ -1,3 +1,6 @@
+--- BombExpert: a Bomberman-style duel for TIC-80.
+-- @module bombexpert
+
 Window = {}
 Util = {}
 Print = {}
