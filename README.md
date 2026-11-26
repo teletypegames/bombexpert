@@ -1,69 +1,42 @@
-
 # BombExpert
 
-A classic Bomberman clone for [TIC-80](https://tic80.com/) fantasy console.
+A Bomberman-style duel for the [TIC-80](https://tic80.com/) fantasy console: one player against the CPU, or two players on one keyboard.
 
 ## Features
 
-- 1 Player mode (vs AI)
-- 2 Player local multiplayer
-- Grid-based movement with smooth animation
-- Destructible walls
-- Power-ups:
+- 1 Player mode (vs CPU) and 2 Player local multiplayer
+- Matches: the first to win 3 rounds (adjustable) is the champion, with a rematch
+- READY / GO countdown, pause menu (resume, restart round, main menu)
+- Grid-based movement with smooth animation, destructible walls, screen shake and debris
+- Power-ups hidden under the walls:
   - **B** (yellow): +1 bomb capacity
   - **P** (orange): +1 blast range
-- Smart AI opponent that seeks power-ups and avoids explosions
-- Score tracking across rounds
+- A CPU opponent that seeks power-ups and avoids explosions
+- Four map styles (classic, arena, maze, corridors)
+- Settings kept between sessions: start bombs and power, speed, bomb timer, CPU speed, wall density, power-up chance, map style, rounds to win, music
 
 ## Controls
 
-### Player 1 (Blue)
-| Action | Key |
-|--------|-----|
-| Move | Arrow Keys |
-| Place Bomb | Space |
+| Action | Player 1 (blue) | Player 2 (red) |
+|--------|-----------------|----------------|
+| Move | Arrow keys | W A S D |
+| Place bomb | Space / Z | G |
+| Pause | Backspace / X | Backspace |
 
-### Player 2 (Red)
-| Action | Key |
-|--------|-----|
-| Move | W, A, S, D |
-| Place Bomb | G |
+Gamepad 1 and gamepad 2 work too. In the menus: Up / Down to choose, Space to select, Backspace to go back.
 
-### Menu Navigation
-| Action | Key |
-|--------|-----|
-| Navigate | Up / Down |
-| Select | Space |
-| Back / Exit | Backspace |
+## Running the game
 
-## How to Play
-
-1. Run the game in TIC-80
-2. Select "1 Player Game" or "2 Player Game" from the menu
-3. Navigate through the maze and place bombs to destroy breakable walls
-4. Collect power-ups to increase your bomb capacity and blast range
-5. Eliminate your opponent by catching them in an explosion
-6. First player to win the round scores a point
-
-## Running the Game
-
-### In TIC-80
 ```bash
-load bombexpert.lua
-run
+make build          # concatenate inc/ into bombexpert.lua (order: bombexpert.inc)
+tic80 --fs=. bombexpert.lua
 ```
 
-### In Browser
-Use the HTML export in the `bombexpert/` folder with the included server:
-```bash
-python serve.py
-```
-Then open http://localhost:3333 in your browser.
+Other targets: `make run`, `make lint` (luacheck, errors mapped back to the `inc/` files), `make check`, `make web` (HTML export into `dist/web`), `make export`, `make docs` (ldoc).
 
-## Requirements
+## Source layout
 
-- [TIC-80](https://tic80.com/) fantasy console (free version works)
-- Or any modern web browser (for HTML export)
+The game follows the module layout of [Definitely not an Impostor](https://git.teletypegames.org/games/impostor): `inc/<layer>/<layer>.<name>.lua` files, concatenated in the order of `bombexpert.inc`. See `CLAUDE.md` for the architecture.
 
 ## Credits
 

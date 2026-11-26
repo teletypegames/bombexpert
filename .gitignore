@@ -1,4 +1,10 @@
 .local
 .DS_Store
 bombexpert.lua
+bombexpert.original.lua
 bombexpert/*
+minify.lua
+*.tic
+*.zip
+dist
+docs

@@ -1,0 +1,15 @@
+Window = {}
+Util = {}
+Print = {}
+UI = {}
+Input = {}
+Audio = {}
+Settings = {}
+Effects = {}
+Map = {}
+Powerup = {}
+Bomb = {}
+AI = {}
+Player = {}
+Match = {}
+Board = {}
