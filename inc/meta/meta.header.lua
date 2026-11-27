@@ -5,6 +5,6 @@
 -- site:    http://teletype.hu
 -- repo:    https://git.teletypegames.org/games/bombexpert
 -- license: MIT
--- version: 0.4
+-- version: 0.5
 -- script:  lua
 
