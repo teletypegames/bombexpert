@@ -12,7 +12,7 @@ A Bomberman-style duel for the [TIC-80](https://tic80.com/) fantasy console: one
 - Power-ups hidden under the walls:
   - **B** (yellow): +1 bomb capacity
   - **P** (orange): +1 blast range
-- A CPU opponent that seeks power-ups and avoids explosions
+- A CPU opponent that hunts you down: it plans with the timing of every blast, never bombs without a way out, digs towards you and sets traps where you cannot escape
 - Four map styles (classic, arena, maze, corridors)
 - Settings kept between sessions: start bombs and power, speed, bomb timer, CPU speed, wall density, power-up chance, map style, rounds to win, music
 

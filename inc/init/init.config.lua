@@ -62,7 +62,7 @@ function Config.initial_data()
     },
     ai = {
       move_delay = 20,
-      bomb_cooldown = 90,
+      bomb_cooldown = 30,
       danger_threshold = 30,
     },
     map = {

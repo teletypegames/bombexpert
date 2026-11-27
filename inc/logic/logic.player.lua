@@ -25,8 +25,6 @@ end
 function Player.reset(player)
   player.grid_x = player.spawn_x
   player.grid_y = player.spawn_y
-  player.last_grid_x = player.spawn_x
-  player.last_grid_y = player.spawn_y
   player.pixel_x = Util.to_pixel(player.spawn_x)
   player.pixel_y = Util.to_pixel(player.spawn_y)
   player.moving = false

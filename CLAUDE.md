@@ -66,7 +66,7 @@ State machine driven by a window manager. `TIC()` in `inc/system/system.main.lua
 | `logic.match.lua` | Match and round flow; phases `ready` → `play` → `dying`; first player found in a flame loses the round |
 | `logic.map.lua` | Board generators (classic, arena, maze, corridors), walkability, spawn areas |
 | `logic.bomb.lua` | Placing, exploding and spreading bombs; explosion cells |
-| `logic.ai.lua` | CPU: danger map, escape routes, power-up seeking, bombing |
+| `logic.ai.lua` | CPU: danger windows (when each cell burns), timed BFS for escapes, a bomb only with a way out, trap search (bomb where the opponent cannot escape), power-ups, digging along the cheapest wall route (bucket Dijkstra) |
 | `logic.player.lua` | Player creation/reset, smooth movement, human input |
 | `logic.powerup.lua` | Power-up types (weighted), hiding and pickup |
 | `logic.effects.lua` | Particles and screen shake (screen offset register 0x3FF9/0x3FFA) |

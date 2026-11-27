@@ -58,14 +58,13 @@ function Match.find_burnt_player()
   return nil
 end
 
---- Moves every player: the CPU chases player 1, humans read their controls.
+--- Moves every player: the CPU hunts the other player, humans read their controls.
 --- @within Match
 local function update_players()
-  local human_player = Context.players[1]
   for _, player in ipairs(Context.players) do
     Player.update_movement(player)
     if player.is_ai then
-      AI.update(player, human_player)
+      AI.update(player, Context.players[player.index == 1 and 2 or 1])
     else
       Player.handle_input(player, Input.player(player.index))
     end
