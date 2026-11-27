@@ -6,6 +6,9 @@ local TRAIL = 7
 
 --- A cheap deterministic hash of two integers.
 --- @within Rain
+--- @param a number First integer.
+--- @param b number Second integer.
+--- @return number Hash in 0..65520.
 local function rain_hash(a, b)
   return (a * 7919 + b * 104729 + a * b * 31) % 65521
 end

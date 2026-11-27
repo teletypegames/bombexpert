@@ -28,6 +28,8 @@ end
 
 --- Draws the big bomb and its fuse spark.
 --- @within TitleWindow
+--- @param cx number Center x.
+--- @param cy number Center y.
 local function draw_bomb(cx, cy)
   local colors = Config.colors
   local r = 17

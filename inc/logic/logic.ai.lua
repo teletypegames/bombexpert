@@ -19,6 +19,9 @@ local TRAP_CANDIDATES = 40
 
 --- Key of a cell in the per-cell tables.
 --- @within AI
+--- @param x number Column.
+--- @param y number Row.
+--- @return number The key.
 local function cell_key(x, y)
   return y * 64 + x
 end
@@ -74,6 +77,11 @@ end
 --- @return table The danger windows.
 function AI.danger_windows(planned)
   local windows = {}
+  --- Adds a burn window to a cell, merging with the one already there.
+  --- @param x number Column.
+  --- @param y number Row.
+  --- @param from number First burning frame.
+  --- @param to number Last burning frame.
   local function add(x, y, from, to)
     local k = cell_key(x, y)
     local w = windows[k]
@@ -109,6 +117,10 @@ end
 --- Timed: a cell may be entered when it does not burn while the player is on it.
 --- Untimed: cells that will burn at all are avoided. blocked_key: a planned bomb's cell.
 --- @within AI
+--- @param player table The AI player.
+--- @param windows table Danger windows by cell key (from AI.danger_windows).
+--- @param timed boolean Timed (true) or untimed (false) search.
+--- @param[opt] blocked_key number Cell key of a planned bomb, treated as blocked.
 --- @return table nodes by cell key, table the nodes in order of distance.
 local function search(player, windows, timed, blocked_key)
   local fps = frames_per_step()
@@ -151,6 +163,9 @@ end
 
 --- Returns the nearest node matching a predicate (order is sorted by distance).
 --- @within AI
+--- @param order table Search nodes sorted by distance.
+--- @param predicate function Test called with a node.
+--- @return table The node, or nil.
 local function nearest(order, predicate)
   for _, node in ipairs(order) do
     if predicate(node) then return node end
@@ -160,6 +175,8 @@ end
 
 --- Moves the player one cell along the path to a node.
 --- @within AI
+--- @param player table The AI player.
+--- @param node table Search node at the end of the path.
 local function step_to(player, node)
   while node.parent and node.parent.steps > 0 do
     node = node.parent
@@ -172,6 +189,10 @@ end
 
 --- Returns the nearest cell that never burns and can be reached in time, or nil.
 --- @within AI
+--- @param player table The AI player.
+--- @param windows table Danger windows by cell key (from AI.danger_windows).
+--- @param[opt] blocked_key number Cell key of a planned bomb, treated as blocked.
+--- @return table The search node, or nil.
 local function find_escape(player, windows, blocked_key)
   local _, order = search(player, windows, true, blocked_key)
   return nearest(order, function(node) return windows[cell_key(node.x, node.y)] == nil end)
@@ -179,6 +200,10 @@ end
 
 --- Danger windows with a bomb of the player planned at a cell.
 --- @within AI
+--- @param player table The AI player.
+--- @param x number Column of the planned bomb.
+--- @param y number Row of the planned bomb.
+--- @return table The danger windows.
 local function windows_with_bomb(player, x, y)
   return AI.danger_windows({
     grid_x = x,
@@ -190,12 +215,19 @@ end
 
 --- Whether the player could still reach a safe cell after placing a bomb here.
 --- @within AI
+--- @param player table The AI player.
+--- @return boolean
 local function can_escape_after_bomb(player)
   return find_escape(player, windows_with_bomb(player, player.grid_x, player.grid_y)) ~= nil
 end
 
 --- Whether a bomb of the player at a cell would leave the target no way out.
 --- @within AI
+--- @param player table The AI player.
+--- @param x number Column of the bomb.
+--- @param y number Row of the bomb.
+--- @param target table The opponent.
+--- @return boolean
 local function traps(player, x, y, target)
   if not AI.blast_reaches(x, y, player.bomb_power, target.grid_x, target.grid_y) then return false end
   local key = cell_key(x, y)
@@ -205,6 +237,7 @@ end
 
 --- Places a bomb if one is left, the cooldown is over and there is a way out.
 --- @within AI
+--- @param player table The AI player.
 --- @return boolean Whether a bomb was placed.
 local function try_bomb(player)
   if player.active_bombs >= player.max_bombs or player.bomb_cooldown > 0 then return false end
@@ -216,6 +249,8 @@ end
 
 --- Leaves a cell that will burn: to the nearest safe cell, or else where the fire comes latest.
 --- @within AI
+--- @param player table The AI player.
+--- @param windows table Danger windows by cell key (from AI.danger_windows).
 local function flee(player, windows)
   local escape = find_escape(player, windows)
   if escape then
@@ -238,6 +273,9 @@ end
 --- or nil if the way is open. The way is planned on the board as it is: a wall costs about as
 --- much as the walk it saves, a ticking bomb a little (it will be gone), fire nothing.
 --- @within AI
+--- @param player table The AI player.
+--- @param target table The opponent.
+--- @return table The search node to stand on, or nil.
 local function dig_position(player, target)
   local start_key = cell_key(player.grid_x, player.grid_y)
   local target_key = cell_key(target.grid_x, target.grid_y)
@@ -304,6 +342,9 @@ end
 
 --- Chooses and starts the next move when the player is safe.
 --- @within AI
+--- @param player table The AI player.
+--- @param[opt] target table The opponent.
+--- @param windows table Danger windows by cell key (from AI.danger_windows).
 local function act(player, target, windows)
   local nodes, order = search(player, windows, false)
   local power = player.bomb_power

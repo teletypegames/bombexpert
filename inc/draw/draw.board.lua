@@ -4,7 +4,14 @@ local PALETTE_MAP = 0x3FF0 * 2
 
 --- Screen position of a board pixel coordinate.
 --- @within Board
+--- @param pixel number Board pixel x.
+--- @return number Screen x.
 local function screen_x(pixel) return pixel + Config.board.offset_x end
+
+--- Screen position of a board pixel coordinate.
+--- @within Board
+--- @param pixel number Board pixel y.
+--- @return number Screen y.
 local function screen_y(pixel) return pixel + Config.board.offset_y end
 
 --- Draws the drop shadows of the walls.
@@ -38,6 +45,10 @@ end
 
 --- Draws a flame cell: green edge, neon body, flickering pale core.
 --- @within Board
+--- @param x number Screen x of the cell.
+--- @param y number Screen y of the cell.
+--- @param size number Flame size in pixels.
+--- @param seed number Flicker phase offset.
 local function draw_flame(x, y, size, seed)
   local colors = Config.colors
   local inset = math.floor((Config.board.tile_size - size) / 2)
@@ -137,6 +148,9 @@ end
 
 --- Draws one player's side of the top bar: name, bomb and power icons with counts, won rounds.
 --- @within Board
+--- @param player table The player.
+--- @param x number Screen x where the side starts.
+--- @param mirrored boolean True for the right-hand side (laid out right to left).
 local function draw_player_status(player, x, mirrored)
   local colors = Config.colors
   local name_color = player.index == 1 and colors.light_blue or colors.red
@@ -145,6 +159,10 @@ local function draw_player_status(player, x, mirrored)
   local dots_w = Config.match.rounds_to_win * 6
   local bomb_icon, power_icon = Powerup.get_config("bomb"), Powerup.get_config("power")
 
+  --- Builds one icon + count item of the bar.
+  --- @param icon table Power-up config of the icon.
+  --- @param value number The count.
+  --- @return table Item with width and draw(sx).
   local function stat(icon, value)
     local text = tostring(value)
     return {

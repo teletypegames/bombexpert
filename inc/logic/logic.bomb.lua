@@ -23,6 +23,9 @@ end
 
 --- Adds one explosion cell.
 --- @within Bomb
+--- @param grid_x number Column.
+--- @param grid_y number Row.
+--- @param dist number Distance from the bomb (delays the flame).
 local function add_explosion(grid_x, grid_y, dist)
   table.insert(Context.explosions, {
     grid_x = grid_x,
@@ -35,6 +38,10 @@ end
 
 --- Spreads the blast along one axis; solid walls stop it, breakable walls stop it after breaking.
 --- @within Bomb
+--- @param grid_x number Column of the bomb.
+--- @param grid_y number Row of the bomb.
+--- @param power number Blast range.
+--- @param is_horizontal boolean Spread along the row (true) or the column (false).
 local function spread_explosion(grid_x, grid_y, power, is_horizontal)
   for _, dir in ipairs(SPREAD_DIRS) do
     for dist = 1, power do

@@ -4,6 +4,9 @@ local MapGenerators = {}
 
 --- Classic grid: solid pillars on every odd cell, breakable walls elsewhere.
 --- @within Map
+--- @param row number Row.
+--- @param col number Column.
+--- @return number The tile.
 local function classic(row, col)
   if row % 2 == 1 and col % 2 == 1 and row > 1 and col > 1 then
     return Config.tiles.solid
@@ -17,6 +20,9 @@ MapGenerators.classic = classic
 
 --- Open arena: pillars on every 4th cell, half as many breakable walls.
 --- @within Map
+--- @param row number Row.
+--- @param col number Column.
+--- @return number The tile.
 function MapGenerators.arena(row, col)
   if row % 4 == 1 and col % 4 == 1 and row > 1 and col > 1 then
     return Config.tiles.solid
@@ -28,6 +34,9 @@ end
 
 --- Dense maze: the classic grid with 85% breakable walls.
 --- @within Map
+--- @param row number Row.
+--- @param col number Column.
+--- @return number The tile.
 function MapGenerators.maze(row, col)
   if row % 2 == 1 and col % 2 == 1 and row > 1 and col > 1 then
     return Config.tiles.solid
@@ -39,6 +48,9 @@ end
 
 --- Corridors: mostly open rows 4, 8, 12 and columns 7, 14, 21 over the classic grid.
 --- @within Map
+--- @param row number Row.
+--- @param col number Column.
+--- @return number The tile.
 function MapGenerators.corridors(row, col)
   if (row == 4 or row == 8 or row == 12) and col > 1 and col < Config.board.width then
     if math.random() < 0.3 then return Config.tiles.breakable end
